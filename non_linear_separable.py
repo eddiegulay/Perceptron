@@ -127,9 +127,15 @@ def train_and_plot(X, labels, learning_rate, epochs, title):
     x2_perceptron = (-weights_perceptron[0] * x1 - weights_perceptron[-1]) / weights_perceptron[1]
     x2_delta = (-weights_delta[0] * x1 - weights_delta[-1]) / weights_delta[1]
 
+    predictions = np.dot(X, weights_perceptron) >= 0
+    accuracy_perceptron = np.mean(predictions == labels)
+
+    predictions_delta = np.sign(np.dot(X, weights_delta)) == 1
+    accuracy_delta = np.mean(predictions_delta == labels)
+
     plt.figure(figsize=(10, 6))
-    plt.plot(x1, x2_perceptron, 'r--', label='Perceptron')
-    plt.plot(x1, x2_delta, 'b-', label='Delta Rule')
+    plt.plot(x1, x2_perceptron, 'r--', label=f'Perceptron (Acc: {accuracy_perceptron:.2f})')
+    plt.plot(x1, x2_delta, 'b-', label=f'Delta Rule (Acc: {accuracy_delta:.2f})')
     plt.scatter(X[:, 0][labels == 0], X[:, 1][labels == 0], c='red', alpha=0.3, label='Class A')
     plt.scatter(X[:, 0][labels == 1], X[:, 1][labels == 1], c='blue', alpha=0.3, label='Class B')
     plt.xlabel('x1')
