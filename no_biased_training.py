@@ -55,7 +55,7 @@ def plot_decision_boundary_no_bias(X, weights, classA, classB, title):
     plt.title(title)
     plt.show()
 
-# Generate data without bias
+
 X, X_bias, labels, classA, classB = generate_data()
 plot_data(classA, classB)
 
@@ -66,13 +66,13 @@ weights_no_bias, mse_no_bias = delta_rule_batch_no_bias(X_bias, labels, lr=0.01,
 plot_decision_boundary_no_bias(X, weights_no_bias, classA, classB, 
                                title='Delta Rule Without Bias - Decision Boundary')
 
-# Test hypothesis by adjusting data parameters (e.g., mA and mB)
+
 mA_new = (0.5, 0.5)
 mB_new = (-0.5, -0.5)
 X_new, X_bias_new, labels_new, classA_new, classB_new = generate_data(mA=mA_new, mB=mB_new)
 plot_data(classA_new, classB_new)
 
-# Train and plot for new parameters
+
 weights_no_bias_new, mse_no_bias_new = delta_rule_batch_no_bias(X_bias_new, labels_new, lr=0.01, epochs=50)
 plot_decision_boundary_no_bias(X_new, weights_no_bias_new, classA_new, classB_new, 
                                title='Delta Rule Without Bias - Adjusted Data Parameters')

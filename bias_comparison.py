@@ -78,9 +78,9 @@ mse_nobias_origin = test_bias_effect(mA=(1.0, 1.0), mB=(-1.0, -1.0), include_bia
 
 # Case 2: Data Separable But Requires Offset (Bias Needed)
 # With Bias
-mse_bias_offset = test_bias_effect(mA=(1.0, 0.5), mB=(-1.0, 0.0), include_bias=True)
+mse_bias_offset = test_bias_effect(mA=(5.0, 0.5), mB=(2.0, 0.0), include_bias=True)
 # Without Bias
-mse_nobias_offset = test_bias_effect(mA=(1.0, 0.5), mB=(-1.0, 0.0), include_bias=False)
+mse_nobias_offset = test_bias_effect(mA=(5.0, 0.5), mB=(2.0, 0.0), include_bias=False)
 
 # Case 3: Non-Linear Separation (Both Fail)
 # With Bias

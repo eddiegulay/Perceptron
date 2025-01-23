@@ -40,37 +40,47 @@ def generate_non_linearly_separable_data():
     shuffle_idx = np.random.permutation(2 * ndata)
     return X[shuffle_idx], X_bias[shuffle_idx], labels[shuffle_idx], classA, classB
 
-def perceptron_learning(X, labels, lr=0.01, epochs=20):
+def perceptron_learning(X, labels, lr=0.1, epochs=20):
     n_samples, n_features = X.shape
-    weights = np.random.randn(n_features) * 0.01
+    weights = np.zeros(n_features)  # Initialize weights to zero
     errors = []
 
     for epoch in range(epochs):
         error = 0
         for i in range(n_samples):
             x = X[i]
+            # Compute weighted sum
             y = np.dot(weights, x)
+            # Perceptron prediction
             pred = 1 if y >= 0 else 0
+            # Update weights if prediction is incorrect
             if pred != labels[i]:
                 error += 1
                 weights += lr * (labels[i] - pred) * x
+        # Record the error rate for this epoch
         errors.append(error / n_samples)
+    
     return weights, errors
 
 def delta_rule_batch(X, labels, lr=0.001, epochs=20):
     n_samples, n_features = X.shape
-    weights = np.random.randn(n_features) * 0.01
-    targets = np.where(labels == 1, 1, -1).reshape(1, -1)
-    X_mat = X.T
+    weights = np.random.randn(n_features) * 0.01  # Small random initialization
+    targets = np.where(labels == 1, 1, -1)  # Convert labels to +1 and -1
     mse_history = []
 
     for epoch in range(epochs):
-        y = np.dot(weights.reshape(1, -1), X_mat)
-        error = y - targets
+        # Compute predictions
+        y = np.dot(weights, X.T)  # Weighted sum
+        # Compute error
+        error = targets - y
+        # Compute MSE
         mse = np.mean(error**2)
         mse_history.append(mse)
-        grad = np.dot(error, X_mat.T) / n_samples
-        weights -= lr * grad.flatten()
+        # Compute gradient
+        grad = np.dot(error, X) / n_samples  # Note the negative sign
+        # Update weights
+        weights -= lr * grad
+    
     return weights, mse_history
 
 def subsample_data(X, labels, classA, classB, scenario):
